@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { BasicReportsService } from '../basic-reports.service';
+import { EmpleyesDto } from './dto/employes.dto';
+import { BasicReportUseCaseService } from '../aplication/employes-use-case.service';
+import { IuseCaseProductService } from '../aplication/employes-use-case.interface';
 
 @Controller('basic-reports')
 export class BasicReportsController {
-  constructor(private readonly basicReportsService: BasicReportsService) { }
+  constructor(@Inject(BasicReportUseCaseService) private readonly basicReportsService: IuseCaseProductService) { }
 
   @Get()
-  async hello() {
-    return await this.basicReportsService.hello()
+  async getEmployes(): Promise<EmpleyesDto[]> {
+    return await this.basicReportsService.getAllEmployes()
   }
 }
