@@ -1,0 +1,1 @@
+# son la interacion entre la clases de tipo entity con la base de datasource 
