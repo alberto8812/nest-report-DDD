@@ -4,6 +4,7 @@ import { BasicReportUseCaseService } from './aplication/employes-use-case.servic
 import { BasicReportsRepository } from './domain/repository/basicRepor.repository';
 import { OrmBasicReportsRepository } from 'src/commons/domain/repository/basic-reports/orm-basic-reports.repository';
 import { PrismaService } from 'src/commons/infrastructure/config-database';
+import { PrinterModule } from 'src/printer/printer.module';
 
 @Module({
   controllers: [BasicReportsController],
@@ -12,6 +13,6 @@ import { PrismaService } from 'src/commons/infrastructure/config-database';
     OrmBasicReportsRepository,
     BasicReportsRepository,
     PrismaService],
-  imports: []
+  imports: [PrinterModule]
 })
 export class BasicReportsModule { }
