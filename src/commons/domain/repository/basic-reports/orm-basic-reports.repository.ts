@@ -4,16 +4,15 @@ import { IOrmEmployeesRepository } from "./orm-product.repositor.interface";
 import { PrismaService } from "src/commons/infrastructure/config-database";
 
 @Injectable()
-export class ormBasicReportsRepository implements IOrmEmployeesRepository {
+export class OrmBasicReportsRepository implements IOrmEmployeesRepository {
 
     constructor(private readonly prisma: PrismaService) { }
 
     async getAllEmployes(): Promise<IGetEmpleyesRepositoryDto[]> {
-        // return await this.prisma.employees.findMany();
-        throw new Error('data')
+        return await this.prisma.employees.findMany();
     }
     async saveEmploye(newProduct: IEmpleyesRepositoryDto): Promise<void> {
-        // await this.prisma.employees.create({
+        // await this.prisma.employees.create({ 
         //     data: newProduct,
         // });
     }
