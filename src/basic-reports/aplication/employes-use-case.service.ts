@@ -7,7 +7,9 @@ import { IResponse, IuseCaseProductService } from "./employes-use-case.interface
 import { BasicReportsRepository } from "../domain/repository/basicRepor.repository";
 import { IcrudBasicReportRepository } from "../domain/repository/basicRepor.Interface";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
+import { getEmplomentLatterReport } from "src/reports/emploment-letter.report";
 import { gethelloWorldReport } from "src/reports";
+
 
 
 @Injectable()
@@ -18,6 +20,12 @@ export class BasicReportUseCaseService implements IuseCaseProductService {
         private readonly basicReportsRepository: IcrudBasicReportRepository,
         private readonly printerService: PrinterService
     ) { }
+
+    async employmenLetter(): Promise<any> {
+        const docDefinition = getEmplomentLatterReport();
+        const doc = this.printerService.createPdf(docDefinition);
+        return doc
+    }
 
     async hello(): Promise<any> {
 

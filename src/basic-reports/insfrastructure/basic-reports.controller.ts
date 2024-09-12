@@ -20,4 +20,12 @@ export class BasicReportsController {
     pdfDoc.pipe(response);
     pdfDoc.end();
   }
+  @Get('employment-letter')
+  async employmenLetter(@Res() response: Response): Promise<any> {
+    const pdfDoc = await this.basicReportsService.employmenLetter()
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Hola-Mundo';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
 }
