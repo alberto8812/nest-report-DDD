@@ -11,6 +11,10 @@ export class BasicReportsRepository implements IcrudBasicReportRepository {
         @Inject(OrmBasicReportsRepository)
         private readonly ormBasicReportsRepository: IOrmEmployeesRepository
     ) { }
+    async getAllEmployeeById(employeeid: number): Promise<IEmployesRepositoryModel> {
+        const employee = await this.ormBasicReportsRepository.getEmployeById(employeeid)
+        return employee
+    }
 
 
     async getAllEmployes(): Promise<IEmployesRepositoryModel[]> {

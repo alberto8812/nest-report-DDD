@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { PrinterService } from "src/printer/printer.service";
 
 
@@ -8,7 +8,7 @@ import { BasicReportsRepository } from "../domain/repository/basicRepor.reposito
 import { IcrudBasicReportRepository } from "../domain/repository/basicRepor.Interface";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import { getEmplomentLatterReport } from "src/reports/emploment-letter.report";
-import { gethelloWorldReport } from "src/reports";
+import { getEmplomentLatterBydIdReport, gethelloWorldReport } from "src/reports";
 
 
 
@@ -20,6 +20,28 @@ export class BasicReportUseCaseService implements IuseCaseProductService {
         private readonly basicReportsRepository: IcrudBasicReportRepository,
         private readonly printerService: PrinterService
     ) { }
+
+
+    async employmenLetterById(employeeid: number): Promise<any> {
+        const employee = await this.basicReportsRepository.getAllEmployeeById(employeeid)
+        if (!employee) {
+            throw new NotFoundException(`Employee with id ${employeeid} not found`)
+        }
+        const docDefinition = getEmplomentLatterBydIdReport(
+            {
+                employerName: 'Elon Reeve Musk',
+                employerPosition: 'CEO',
+                employeeName: 'Liliana Ramos',
+                employeePosition: employee.position,
+                employeeStartDate: employee.start_date,
+                employeeHours: employee.work_time,
+                employeeWorkSchedule: employee.work_schedule,
+                employerCompany: "La NASA",
+            }
+        );
+        const doc = this.printerService.createPdf(docDefinition);
+        return doc
+    }
 
     async employmenLetter(): Promise<any> {
         const docDefinition = getEmplomentLatterReport();

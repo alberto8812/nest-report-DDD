@@ -8,6 +8,18 @@ export class OrmBasicReportsRepository implements IOrmEmployeesRepository {
 
     constructor(private readonly prisma: PrismaService) { }
 
+
+    async getEmployeById(employeeid: number): Promise<IGetEmpleyesRepositoryDto> {
+        return await this.prisma.employees.findUnique(
+            {
+                where: {
+                    id: employeeid
+                }
+            }
+        )
+    }
+
+
     async getAllEmployes(): Promise<IGetEmpleyesRepositoryDto[]> {
         return await this.prisma.employees.findMany();
     }

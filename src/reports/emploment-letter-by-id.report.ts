@@ -2,6 +2,18 @@ import type { Content, StyleDictionary, TDocumentDefinitions } from "pdfmake/int
 import { DateFormater } from "src/utils"
 import { headerSection } from "./sections/header.section"
 
+interface ReportValues {
+    employerName: string;
+    employerPosition: string;
+    employeeName: string;
+    employeePosition: string;
+    employeeStartDate: Date;
+    employeeHours: Date;
+    employeeWorkSchedule: string;
+    employerCompany: string
+
+}
+
 const style: StyleDictionary = {
     header: {
         fontSize: 22,
@@ -33,7 +45,18 @@ const logo: Content = {
     alignment: 'center',
     margin: [0, 0, 0, 20],
 }
-export const getEmplomentLatterReport = (): TDocumentDefinitions => {
+export const getEmplomentLatterBydIdReport = (values: ReportValues): TDocumentDefinitions => {
+
+    const {
+        employerName,
+        employerPosition,
+        employeeName,
+        employeeStartDate,
+        employeeHours,
+        employeeWorkSchedule,
+        employeePosition,
+        employerCompany,
+    } = values
     const docDefinition: TDocumentDefinitions = {
         styles: style,
         pageMargins: [40, 60, 40, 60],
@@ -44,9 +67,9 @@ export const getEmplomentLatterReport = (): TDocumentDefinitions => {
                 style: 'header'
             },
             {
-                text: `Yo, [Nombre del Empleador], en mi calidad de [Cargo del Empleador] de [Nombre de la Empresa], por medio de la presente certifico que [Nombre del Empleado] ha sido empleado en nuestra empresa desde el [Fecha de Inicio del Empleado]. \n
-                        Durante su empleo, el Sr./Sra. [Nombre del Empleado] ha desempeñado el cargo de [Cargo del Empleado], demostrando responsabilidad, compromiso y habilidades profesionales en sus labores.\n
-                        ,La jornada laboral del Sr./ Sra. [Nombre del Empleado] es de [Número de Horas] horas semanales, con un horario de [Horario de Trabajo], cumpliendo con las políticas y procedimientos establecidos por la empresa.\n
+                text: `Yo, ${employerName}, en mi calidad de ${employerPosition} de ${employerCompany}, por medio de la presente certifico que ${employeeName} ha sido empleado en nuestra empresa desde el ${DateFormater.getDDMMMYYY(employeeStartDate)}. \n
+                        Durante su empleo, el Sr./Sra. ${employeeName} ha desempeñado el cargo de ${employerPosition}, demostrando responsabilidad, compromiso y habilidades profesionales en sus labores.\n
+                        ,La jornada laboral del Sr./ Sra. ${employeeName} es de ${employeeHours} horas semanales, con un horario de ${employeeWorkSchedule}, cumpliendo con las políticas y procedimientos establecidos por la empresa.\n
                         ,Esta constancia se expide a solicitud del interesado para los fines que considere conveniente.\n`,
 
                 style: 'body'
@@ -56,19 +79,19 @@ export const getEmplomentLatterReport = (): TDocumentDefinitions => {
                 style: 'signature'
             },
             {
-                text: `[Nombre del Empleador] `,
+                text: `${employerName}`,
                 style: 'signature'
             },
             {
-                text: `[Cargo del Empleador]`,
+                text: `${employerPosition}`,
                 style: 'signature'
             },
             {
-                text: `[Nombre de la Empresa] `,
+                text: `${employerCompany} `,
                 style: 'signature'
             },
             {
-                text: `[Fecha de Emisión]`,
+                text: DateFormater.getDDMMMYYY(new Date()),
                 style: 'signature'
             },
         ],

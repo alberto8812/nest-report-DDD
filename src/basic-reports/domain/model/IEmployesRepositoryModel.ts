@@ -2,7 +2,8 @@
 
 export interface IEmployesRepositoryModel {
     id: number;
-    position: string
+    position: string;
+    name: string
     start_date: Date
     work_time: Date
     hours_per_day: number

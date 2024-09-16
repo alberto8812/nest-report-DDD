@@ -6,6 +6,7 @@ export interface IuseCaseProductService {
     saveEmploye(newEmploye: EmpleyesDto): Promise<IResponse>;
     hello(): Promise<any>;
     employmenLetter(): Promise<any>;
+    employmenLetterById(employeeid: number): Promise<any>;
 }
 
 export interface IResponse {

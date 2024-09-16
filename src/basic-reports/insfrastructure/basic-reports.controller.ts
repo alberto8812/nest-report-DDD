@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Res } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Res } from '@nestjs/common';
 import { EmpleyesDto } from './dto/employes.dto';
 import { BasicReportUseCaseService } from '../aplication/employes-use-case.service';
 import { IuseCaseProductService } from '../aplication/employes-use-case.interface';
@@ -23,6 +23,14 @@ export class BasicReportsController {
   @Get('employment-letter')
   async employmenLetter(@Res() response: Response): Promise<any> {
     const pdfDoc = await this.basicReportsService.employmenLetter()
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Hola-Mundo';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
+  @Get('employment-letter/:employeeid')
+  async employmenLetterById(@Res() response: Response, @Param('employeeid') employeeid: string): Promise<any> {
+    const pdfDoc = await this.basicReportsService.employmenLetterById(+ employeeid)
     response.setHeader('Content-Type', 'application/pdf');
     pdfDoc.info.Title = 'Hola-Mundo';
     pdfDoc.pipe(response);
