@@ -10,6 +10,12 @@ const logo: Content = {
     alignment: 'center',
     margin: [0, 0, 0, 20],
 }
+const createDate: Content = {
+    text: DateFormater.getDDMMMYYY(new Date()),
+    alignment: 'right',
+    margin: [20, 20],
+    width: 150,
+}
 interface HeaderOption {
     title?: string;
     subTitle?: string;
@@ -26,20 +32,38 @@ export const headerSection = (options: HeaderOption): Content => {
     } = options;
 
     const headerLogo: Content = showLogo ? logo : null;
-    const headerDate: Content = showData ? {
-        text: DateFormater.getDDMMMYYY(new Date()),
-        alignment: 'right',
-        margin: [20, 20]
+    const headerDate: Content = showData ? createDate : null;
+    const headerSubtitle: Content = subTitle ? {
+        text: subTitle,
+        style: {
+            bold: true,
+            alignment: "center",
+            fontSize: 15
+        },
     } : null;
 
 
     const headerTitle: Content = title ?
         {
-            text: title,
-            style: {
-                bold: true,
-                alignment: "center"
-            }
+            stack: [
+                {
+                    text: title,
+                    style: {
+                        bold: true,
+                        alignment: "center",
+                        fontSize: 22
+                    },
+                },
+                headerSubtitle
+            ],
+            fontSize: 15,
+            alignment: 'center',
+            margin: [0, 20, 0, 0],
+            // text: title,
+            // style: {
+            //     bold: true,
+            //     alignment: "center"
+            // }
         } : null;
 
     return {

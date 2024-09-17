@@ -1,3 +1,4 @@
+import { CountryDto } from "../insfrastructure/dto/country.dto";
 import { EmpleyesDto } from "../insfrastructure/dto/employes.dto";
 
 
@@ -7,6 +8,8 @@ export interface IuseCaseProductService {
     hello(): Promise<any>;
     employmenLetter(): Promise<any>;
     employmenLetterById(employeeid: number): Promise<any>;
+
+    getAllCountries(): Promise<any>;
 }
 
 export interface IResponse {

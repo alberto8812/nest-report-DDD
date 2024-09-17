@@ -8,7 +8,8 @@ import { BasicReportsRepository } from "../domain/repository/basicRepor.reposito
 import { IcrudBasicReportRepository } from "../domain/repository/basicRepor.Interface";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import { getEmplomentLatterReport } from "src/reports/emploment-letter.report";
-import { getEmplomentLatterBydIdReport, gethelloWorldReport } from "src/reports";
+import { CountryDto } from "../insfrastructure/dto/country.dto";
+import { getCountriesReport, getEmplomentLatterBydIdReport, gethelloWorldReport } from "src/reports";
 
 
 
@@ -20,6 +21,12 @@ export class BasicReportUseCaseService implements IuseCaseProductService {
         private readonly basicReportsRepository: IcrudBasicReportRepository,
         private readonly printerService: PrinterService
     ) { }
+    async getAllCountries(): Promise<any> {
+        const getCountries = await this.basicReportsRepository.getAllCountries()
+        const docDefinition = getCountriesReport();
+        const doc = this.printerService.createPdf(docDefinition);
+        return doc
+    }
 
 
     async employmenLetterById(employeeid: number): Promise<any> {

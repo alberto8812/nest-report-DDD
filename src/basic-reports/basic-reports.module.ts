@@ -5,12 +5,14 @@ import { BasicReportsRepository } from './domain/repository/basicRepor.repositor
 import { OrmBasicReportsRepository } from 'src/commons/domain/repository/basic-reports/orm-basic-reports.repository';
 import { PrismaService } from 'src/commons/infrastructure/config-database';
 import { PrinterModule } from 'src/printer/printer.module';
+import { OrmCountryRepository } from 'src/commons/domain/repository/country/orm-country.repository';
 
 @Module({
   controllers: [BasicReportsController],
   providers: [
     BasicReportUseCaseService,
     OrmBasicReportsRepository,
+    OrmCountryRepository,
     BasicReportsRepository,
     PrismaService],
   imports: [PrinterModule]

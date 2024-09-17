@@ -1,13 +1,13 @@
+import { Continent } from "src/commons/domain/entitites";
 
 
-export interface IEmployesRepositoryModel {
-    id: number;
-    position: string;
-    name: string
-    start_date: Date
-    work_time: Date
-    hours_per_day: number
-    work_schedule: string
+export interface ICountryRepositoryModel {
+    id: bigint;
+    name: string;
+    iso2: string;
+    iso3: string;
+    local_name: string;
+    continent: Continent;
 }
 
-export type ISaveEmployesRepositoryModel = Omit<IEmployesRepositoryModel, 'id'>
+export type ISaveEmployesRepositoryModel = Omit<ICountryRepositoryModel, 'id'>
