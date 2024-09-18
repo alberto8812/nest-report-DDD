@@ -21,9 +21,16 @@ export class BasicReportUseCaseService implements IuseCaseProductService {
         private readonly basicReportsRepository: IcrudBasicReportRepository,
         private readonly printerService: PrinterService
     ) { }
+
+    async getAllByContinentsCountries(continents: string): Promise<any> {
+        const getCountries = await this.basicReportsRepository.getAllContinentsCountries(continents)
+        const docDefinition = getCountriesReport({ title: "Countries Report", subtitle: "List of countries", countries: getCountries });
+        const doc = this.printerService.createPdf(docDefinition);
+        return doc
+    }
     async getAllCountries(): Promise<any> {
         const getCountries = await this.basicReportsRepository.getAllCountries()
-        const docDefinition = getCountriesReport();
+        const docDefinition = getCountriesReport({ title: "Countries Report", subtitle: "List of countries", countries: getCountries });
         const doc = this.printerService.createPdf(docDefinition);
         return doc
     }

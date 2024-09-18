@@ -4,6 +4,7 @@ import { ICountryRepositoryDto, IGetCountryRepositoryDto } from "../../dto/count
 
 export interface IOrmCountryRepository {
     getAllCiuntries(): Promise<IGetCountryRepositoryDto[]>;
+    getAllContinentsCiuntries(continents: string): Promise<IGetCountryRepositoryDto[]>;
     getCountryById(countryid: number): Promise<IGetCountryRepositoryDto>;
     saveCountry(newProduct: ICountryRepositoryDto): Promise<void>;
 }

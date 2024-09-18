@@ -9,4 +9,5 @@ export interface IcrudBasicReportRepository {
     saveEmployes(): Promise<ISaveEmployesRepositoryModel>;
 
     getAllCountries(): Promise<ICountryRepositoryModel[]>;
+    getAllContinentsCountries(continents: string): Promise<ICountryRepositoryModel[]>;
 }

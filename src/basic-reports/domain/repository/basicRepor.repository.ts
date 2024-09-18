@@ -16,6 +16,10 @@ export class BasicReportsRepository implements IcrudBasicReportRepository {
         @Inject(OrmCountryRepository)
         private readonly ormCountryRepository: IOrmCountryRepository
     ) { }
+    async getAllContinentsCountries(continents: string): Promise<ICountryRepositoryModel[]> {
+        const countries = await this.ormCountryRepository.getAllContinentsCiuntries(continents)
+        return countries;
+    }
 
     async getAllCountries(): Promise<ICountryRepositoryModel[]> {
         const employee = await this.ormCountryRepository.getAllCiuntries()

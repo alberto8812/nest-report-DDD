@@ -44,4 +44,12 @@ export class BasicReportsController {
     pdfDoc.pipe(response);
     pdfDoc.end();
   }
+  @Get('countries/:continents')
+  async getcountriesByContinentsReport(@Res() response: Response, @Param('continents') continents: string): Promise<any> {
+    const pdfDoc = await this.basicReportsService.getAllByContinentsCountries(continents)
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Countries-report';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
 }

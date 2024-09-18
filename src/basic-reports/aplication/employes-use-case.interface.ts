@@ -9,7 +9,9 @@ export interface IuseCaseProductService {
     employmenLetter(): Promise<any>;
     employmenLetterById(employeeid: number): Promise<any>;
 
+
     getAllCountries(): Promise<any>;
+    getAllByContinentsCountries(continents: string): Promise<any>;
 }
 
 export interface IResponse {

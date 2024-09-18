@@ -9,9 +9,38 @@ import { continents } from "@prisma/client";
 export class OrmCountryRepository implements IOrmCountryRepository {
 
     constructor(private readonly prisma: PrismaService) { }
+    async getAllContinentsCiuntries(continents: string): Promise<IGetCountryRepositoryDto[]> {
+        const countries = await this.prisma.countries.findMany(
+            {
+                where: {
+                    local_name: {
+                        not: null
+                    },
+                    continent: {
+                        equals: continents as continents,  // Usa el filtro "equals" si es un enum
+                    },
+                }
+            }
+        )
+        return countries.map(country => {
+
+            return {
+                ...country,
+                continent: this.MapContienet(country.continent)
+            }
+        })
+    }
+
     async getAllCiuntries(): Promise<IGetCountryRepositoryDto[]> {
-        const countries = await this.prisma.countries.findMany()
-        console.log(countries)
+        const countries = await this.prisma.countries.findMany(
+            {
+                where: {
+                    local_name: {
+                        not: null
+                    }
+                }
+            }
+        )
         return countries.map(country => {
 
             return {
