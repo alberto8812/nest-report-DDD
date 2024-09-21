@@ -11,8 +11,9 @@ export class BasicReportsRepository implements IcrudStoreReportRepository {
         @Inject(OrmOrderRepository)
         private readonly ormOrderRepository: IOrmOrderRepository
     ) { }
-    getOrderByReportByOrderId(orderId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async getOrderByReportByOrderId(orderId: string): Promise<any> {
+        const order = await this.ormOrderRepository.getOrdersById(Number(orderId));
+        return order;
     }
 
 

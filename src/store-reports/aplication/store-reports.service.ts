@@ -4,6 +4,8 @@ import { PrinterService } from 'src/printer/printer.service';
 import { IcrudStoreReportRepository } from '../domain/repository/store-reports.Interface';
 import { BasicReportsRepository } from '../domain/repository/basicRepor.repository';
 import { gethelloWorldReport } from 'src/reports/hello-word.reports';
+import { orderByIDReport } from 'src/reports';
+import { IOrder_detailsRepositoryDto } from 'src/commons/domain/dto/Order_details-repository.dto';
 
 @Injectable()
 export class StoreReportsService implements IuseCaseStoreReportService {
@@ -13,8 +15,8 @@ export class StoreReportsService implements IuseCaseStoreReportService {
         private readonly printerService: PrinterService
     ) { }
     async getOrderByReportByOrderId(orderId: string): Promise<any> {
-        console.log('test')
-        const docDefinition = gethelloWorldReport();
+        const order = await this.basicReportsRepository.getOrderByReportByOrderId(orderId);
+        const docDefinition = orderByIDReport(order);
         const doc = this.printerService.createPdf(docDefinition);
         return doc
     }

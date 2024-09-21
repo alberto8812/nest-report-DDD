@@ -1,12 +1,12 @@
 import { Continent } from "../entitites";
 
 export interface ICustomersRepositoryDto {
-    customer_name?: String
-    contact_name?: String
-    address?: String
-    city?: String
-    postal_code?: String
-    country?: String
+    customer_name?: string
+    contact_name?: string
+    address?: string
+    city?: string
+    postal_code?: string
+    country?: string
 
 }
 
