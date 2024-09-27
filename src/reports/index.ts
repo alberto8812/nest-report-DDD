@@ -1,3 +1,4 @@
+
 export * from "./country-report";
 
 export * from "./emploment-letter-by-id.report";
@@ -8,6 +9,9 @@ export * from "./hello-word.reports";
 
 export * from "./order-by-id.report";
 
+export * from "./basic-chart-svg.report";
+
+export * from "./statistics.report";
 
 
 

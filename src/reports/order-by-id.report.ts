@@ -21,7 +21,6 @@ const styles: StyleDictionary = {
 
 
 export const orderByIDReport = (order: IGetOrdersRepositoryDto): TDocumentDefinitions => {
-    console.log(order)
     let Subtotal: number = 0;
     const { order_details, customers, ...rest } = order;
     return {
@@ -86,7 +85,7 @@ export const orderByIDReport = (order: IGetOrdersRepositoryDto): TDocumentDefini
                         bold: true
                     },
                     {
-                        text: `${customers.contact_name}\n`,
+                        text: `${customers.postal_code}\n`,
                         bold: true
                     },
                     {

@@ -5,6 +5,8 @@ import { IGetOrdersRepositoryDto } from "../../dto/Orders-repository.dto";
 import { IGetCustomersRepositoryDto } from "../../dto/Customers-repository.dto";
 import { IGetOrder_detailsRepositoryDto } from "../../dto/Order_details-repository.dto";
 import { json } from "stream/consumers";
+import { IGetCountryRepositoryDto } from "../../dto/country-repository.dto";
+import { count } from "console";
 //import { IGetProductsRepositoryDto } from "../../dto/Products-repository.dto";
 
 export interface IGetProductsRepositoryDto {
@@ -26,11 +28,27 @@ export interface IGetProductsRepositoryDto {
 export class OrmOrderRepository implements IOrmOrderRepository {
 
     constructor(private readonly prisma: PrismaService) { }
+
+    async getStatistics(): Promise<CountryCustomerStats[]> {
+        const countryCustomers = await this.prisma.customers.groupBy({
+            by: ['country'],
+            _count: true,
+            orderBy: {
+                _count: {
+                    country: 'desc'
+                }
+            },
+            take: 10
+        })
+        return countryCustomers
+
+
+    }
     getAllOrders(): Promise<IGetOrdersRepositoryDto[]> {
         throw new Error("Method not implemented.");
     }
     async getOrdersById(orderId: number): Promise<IGetOrdersRepositoryDto> {
-        console.log(orderId)
+
         const order = await this.prisma.orders.findUnique({
             where: {
                 order_id: orderId
