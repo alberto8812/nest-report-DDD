@@ -17,17 +17,14 @@ export class StoreReportsService implements IuseCaseStoreReportService {
     async getStatistics(): Promise<any> {
 
         const countryReport = await this.basicReportsRepository.getStatistics();
-        console.log(countryReport)
-        const topCountries = countryReport.map((country) => {
+        const entries = countryReport.map((country) => {
             return {
-                country: country.country,
-                customers: country._count
+                label: country.country,
+                value: country._count
             }
         }
         )
-
-
-        const docDefinition = await getStatisticsReport({ topCountries });
+        const docDefinition = await getStatisticsReport({ entries });
         const doc = this.printerService.createPdf(docDefinition);
         return doc
     }

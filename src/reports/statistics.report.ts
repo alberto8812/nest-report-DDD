@@ -1,69 +1,66 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces"
 import * as Utils from '../utils/helpers/chart-utils'
+import { getDonutChart } from "./charts/donutChars";
+import { headerSection } from "./sections/header.section";
 
 
 
 
-interface TopCountry {
-    country: string;
-    customers: number;
+interface Entries {
+    label: string;
+    value: number;
 }
 
 interface ReportOptions {
     title?: string;
     subtitle?: string;
-    topCountries: TopCountry[];
+    entries: Entries[];
 }
-
-const generateTopCountries = async (topCountries: TopCountry[]): Promise<string> => {
-
-    const data = {
-        labels: topCountries.map((country) => country.country),
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: topCountries.map((country) => country.customers),
-                //backgroundColor: Object.values(Utils.CHART_COLORS),
-            }
-        ]
-    }
-
-    const config = {
-        type: 'doughnut',
-        data: data,
-        options: {
-            legend: {
-                position: 'left',
-            },
-            plugins: {
-                datalabels: {
-                    color: 'white',
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
-                    // text: 'Chart.js Doughnut Chart'
-                }
-            }
-        },
-    };
-    /**
-     * Compare this snippet from src/utils/helpers/chart-utils.ts:
-     * gemeramos una imagen a partir de un objeto de datos de grafico
-     */
-    return Utils.chartJsToImage(config)
-
-}
-
 
 
 export const getStatisticsReport = async (option: ReportOptions): Promise<TDocumentDefinitions> => {
-    const donutchart = await generateTopCountries(option.topCountries)
+    const donutchart = await getDonutChart({ entries: option.entries })
+    console.log(option.entries, 'donutchart')
     const docDefinition: TDocumentDefinitions = {
+        pageMargins: [40, 100, 40, 60],
+        header: headerSection({
+            title: option.title ?? 'Reporte de estadísticas',
+            subTitle: option.subtitle ?? 'Reporte generado por el sistema'
+        }),
         content: [
             {
-                image: donutchart,
-                width: 500
+                columns: [
+                    {
+                        stack: [
+
+                            {
+                                text: `Mejores 10 países con más clientes`,
+                                style: 'header',
+                                bold: true,
+                                alignment: 'center',
+                                margin: [0, 0, 0, 20]
+                            },
+                            {
+                                image: donutchart,
+                                width: 300
+                            },
+                        ]
+                    },
+                    {
+                        width: 'auto',
+                        layout: 'lightHorizontalLines',
+                        table: {
+                            headerRows: 1,
+                            widths: [100, 'auto'],
+                            body: [
+
+                                [{ text: 'Pais', bold: true }, { text: 'Cliente', bold: true }],
+                                ...option.entries.map((entry) => [entry.label, entry.value])
+                            ]
+                        }
+                    }
+
+                ]
             }
         ]
     }
