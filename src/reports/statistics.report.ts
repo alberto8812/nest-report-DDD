@@ -2,6 +2,9 @@ import type { TDocumentDefinitions } from "pdfmake/interfaces"
 import * as Utils from '../utils/helpers/chart-utils'
 import { getDonutChart } from "./charts/donutChars";
 import { headerSection } from "./sections/header.section";
+import { getLineChart } from "./charts/line.chart";
+import { getBarChart } from "./charts";
+import { footerSection } from "./sections/footer.section";
 
 
 
@@ -19,14 +22,16 @@ interface ReportOptions {
 
 
 export const getStatisticsReport = async (option: ReportOptions): Promise<TDocumentDefinitions> => {
-    const donutchart = await getDonutChart({ entries: option.entries })
-    console.log(option.entries, 'donutchart')
+    const [donutchart, lineChart, barchart] = await Promise.all([getDonutChart({ entries: option.entries }), getLineChart(), getBarChart()])
+
+
     const docDefinition: TDocumentDefinitions = {
         pageMargins: [40, 100, 40, 60],
         header: headerSection({
             title: option.title ?? 'Reporte de estadísticas',
             subTitle: option.subtitle ?? 'Reporte generado por el sistema'
         }),
+        footer: footerSection,
         content: [
             {
                 columns: [
@@ -61,7 +66,17 @@ export const getStatisticsReport = async (option: ReportOptions): Promise<TDocum
                     }
 
                 ]
-            }
+            },
+            {
+                image: lineChart,
+                width: 500,
+                margin: [0, 20]
+            },
+            {
+                image: barchart,
+                width: 500,
+                margin: [0, 20]
+            },
         ]
     }
 
