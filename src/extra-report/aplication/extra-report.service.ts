@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrinterService } from 'src/printer/printer.service';
-import { gethelloWorldReport } from 'src/reports';
+import { getCommunityReport, gethelloWorldReport } from 'src/reports';
+import * as fs from 'fs';
 
 @Injectable()
 export class ExtraReportService {
@@ -11,5 +12,12 @@ export class ExtraReportService {
         const docDefinition = gethelloWorldReport();
         const doc = this.printerService.createPdf(docDefinition);
         return Promise.resolve(doc);
+    }
+    async getCommunityReport(): Promise<any> {
+        const docDefinition = getCommunityReport();
+        const doc = this.printerService.createPdf(docDefinition);
+        return Promise.resolve(doc);
+
+
     }
 }

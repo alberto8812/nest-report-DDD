@@ -1,18 +1,13 @@
-
-export * from "./country-report";
-
-export * from "./emploment-letter-by-id.report";
-
-export * from "./emploment-letter.report";
-
-export * from "./hello-word.reports";
-
-export * from "./order-by-id.report";
-
-export * from "./basic-chart-svg.report";
-
-export * from "./statistics.report";
-
-
-
-
+export * from './basic-chart-svg.report';
+export * from './charts/barchart.chart';
+export * from './charts/donutChars';
+export * from './charts/line.chart';
+export * from './community.report';
+export * from './country-report';
+export * from './emploment-letter-by-id.report';
+export * from './emploment-letter.report';
+export * from './hello-word.reports';
+export * from './order-by-id.report';
+export * from './sections/footer.section';
+export * from './sections/header.section';
+export * from './statistics.report';
