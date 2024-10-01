@@ -14,7 +14,8 @@ const createDate: Content = {
     text: DateFormater.getDDMMMYYY(new Date()),
     alignment: 'right',
     margin: [20, 20],
-    width: 150,
+    width: 100,
+    fontSize: 7
 }
 interface HeaderOption {
     title?: string;

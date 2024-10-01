@@ -49,7 +49,15 @@ const custmTableLayouts: Record<string, CustomTableLayout> = {
         }
 
     }
-
+    ,
+    borderBlues: {
+        hLineColor: function () {
+            return '#5f96d4'
+        },
+        vLineColor: function () {
+            return '#5f96d4'
+        }
+    }
 
 }
 
